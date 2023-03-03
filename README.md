@@ -4,7 +4,7 @@
 | Column             | Type     | Options                      |
 | ------------------ | -------- | ---------------------------- |
 | name               | string   | null: false                  |
-| email              | string   | null: false,unique:ture      |
+| email              | string   | null: false,unique:true      |
 | encrypted_password | string   | null: false                  |
 | first_name         | string   | null: false                  |
 | second_name        | string   | null: false                  |
@@ -24,14 +24,14 @@
 | description      | text	       | null: false                   |
 | price	           | integer     | null: false                   | 
 | status_id	       | integer     | null: false                   |
-| category	       | string      | null: false                   |
+| category_id      | integer     | null: false                   |
 | user	           | references  | null: false, foreign_key: true|
-|shipping_days_id  | integer     | null: false                   |
+|shipping_day_id   | integer     | null: false                   |
 |shipping_area_id  | integer     | null: false                   | 
-|seller            | text        | null: false                   |
+|seller_id         | integer     | null: false                   |
 ### Association
 - belongs_to :user
-- has_many   :orders
+- belong_to  :order
 
 ## orders テーブル
 
@@ -49,12 +49,11 @@
 | Column        | Type        | Options                       |
 | --------------| ----------- | ------------------------------|
 | postal_code	  | string      | null: false                   |
-| prefecture  	| text	      | null: false                   |
-| city	        | text        | null: false                   | 
-| Street        | string      | null: false                   |
-| Building      | string      |                               |
-| user	        | references  | null: false,                  |
-|phone	        | integer     | null: false,                  |
+| prefecture  	| string	    | null: false                   |
+| city	        | string      | null: false                   | 
+| street        | string      | null: false                   |
+| building      | string      |                               |
+| phone	        | string      | null: false                   |
 
  ### Association
-- has_one : oeder
+- has_many : order
