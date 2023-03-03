@@ -1,49 +1,47 @@
 
-furima-38922
-概要
-ユーザーの登録、編集、消去
-商品の出品、編集、削除
-商品の購入
-商品の検索
-クレジットカード決済
-商品の配送先情報
+## users テーブル
+
+| Column             | Type     | Options                      |
+| ------------------ | -------- | ---------------------------- |
+| name               | string   | null: false                  |
+| email              | string   | null: false                  |
+| encrypted_password | string   | null: false                  |
+| user               | integer  | null: false, foreign_key:true|
+| first_name         | string   | null: false                  |
+| second_name        | string   | null: false                  |
+| first_name_kana    | string   | null: false                  |
+| second_name_kana   | string   | null: false                  |
+| birthday           | string   | null: false                  |
+### Association
+- has_many :items
+- has_many :orders
 
 
+## items テーブル
 
-データベース
-データベースの種類: PostgreSQL 
-データベースの設定方法: config/database.ymlファイルで設定
-認証:admin  2222
-
-
-モデル
-
-User
-Column	  Type	   Options
-name	    string	null: false
-email	    string	null: false
-password	string	null: false
-address   string  null: false
-has_many :items
-has_many :buy
-
-
-Item
-Column	      Type	      Options
-name	       string	null: false
-description	 text	null: false
-price	       integer	null: false
-status	     integer	null: false
-user_id	     integer	null: false, foreign_key: true
-belongs_to :user
-belongs_to :buy
-has_one :order
+| Column      | Type        | Options                       |
+| ------------| ----------- | ------------------------------|
+| item        | integer     | null: false,foreign_key: true |
+| name	      | string      | null: false                   |
+| description	| text	      | null: false                   |
+| price	      | integer     | null: false                   | 
+| status	    | integer     | null: false                   |
+| item_name   | string      | null: false                   |
+| category	  | string      | null: false                   |
+| content   	| text	      | null: false                   |
+| created_at  | integer     | null: false                   | 
+| update_at	  | integer     | null: false                   |
+| user	      | references  | null: false, foreign_key: true|
+### Association
+- belongs_to :user
+- has_one    :order
 
 
-Order
-Column	Type	Options
-user_id	          integer	null: false, foreign_key: true
-item_id	          integer	null: false, foreign_key: true
+## order テーブル
 
-belongs_to :user
-belongs_to :item
+| Column | Type       | Options                        |
+| ------ | ---------- | ------------------------------ |
+| user   | references | null: false, foreign_key: true |
+| item   | references | null: false, foreign_key: true |
+
+
