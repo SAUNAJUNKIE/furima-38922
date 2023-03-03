@@ -18,23 +18,22 @@
 
 ## items テーブル
 
-| Column        | Type        | Options                       |
-| --------------| ----------- | ------------------------------|
-| name	        | string      | null: false                   |
-| description  	| text	      | null: false                   |
-| price	        | integer     | null: false                   | 
-| status	      | integer     | null: false                   |
-| category	    | string      | null: false                   |
-| user	        | references  | null: false, foreign_key: true|
-|shipping_days  | text        | null: false                   |
-|shipping_area  | text        | null: false                   | 
-|Seller         | text        | null: false                   |
+| Column           | Type        | Options                       |
+| -----------------| ----------- | ------------------------------|
+| name	           | string      | null: false                   |
+| description      | text	       | null: false                   |
+| price	           | integer     | null: false                   | 
+| status_id	       | integer     | null: false                   |
+| category	       | string      | null: false                   |
+| user	           | references  | null: false, foreign_key: true|
+|shipping_days_id  | integer     | null: false                   |
+|shipping_area_id  | integer     | null: false                   | 
+|seller            | text        | null: false                   |
 ### Association
 - belongs_to :user
-- has_one    :order
+- has_many   :orders
 
-
-## order テーブル
+## orders テーブル
 
 | Column | Type       | Options                        |
 | ------ | ---------- | ------------------------------ |
@@ -42,8 +41,8 @@
 | item   | references | null: false, foreign_key: true |
 ### Association
 - belongs_to :user
-- has_one    :item
-- has_one    :shipping_addresses
+- belongs_to :item
+- belongs_to :shipping_address
 
 
 ## shipping_addresses　テーブル
@@ -52,8 +51,10 @@
 | postal_code	  | string      | null: false                   |
 | prefecture  	| text	      | null: false                   |
 | city	        | text        | null: false                   | 
-| address_line_1| string      | null: false                   |
-| address_line_2| string      | null: false                   |
-| user	        | references  | null: false, foreign_key: true|
+| Street        | string      | null: false                   |
+| Building      | string      |                               |
+| user	        | references  | null: false,                  |
+|phone	        | integer     | null: false,                  |
+
  ### Association
 - has_one : oeder
