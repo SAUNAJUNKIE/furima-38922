@@ -49,12 +49,12 @@
 | Column        | Type        | Options                       |
 | --------------| ----------- | ------------------------------|
 | postal_code	  | string      | null: false                   |
-| prefecture  	| string	    | null: false                   |
+| prefecture_id | integer	    | null: false                   |
 | city	        | string      | null: false                   | 
 | street        | string      | null: false                   |
 | building      | string      |                               |
 | phone	        | string      | null: false                   |
-| oder	        | reference   | null: false, foreign_key: true|
+| order	        | references  | null: false, foreign_key: true|
 
  ### Association
 - belongs_to : order
