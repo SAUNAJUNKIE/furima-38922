@@ -27,11 +27,11 @@
 | category_id      | integer     | null: false                   |
 | user	           | references  | null: false, foreign_key: true|
 |shipping_day_id   | integer     | null: false                   |
-|shipping_area_id  | integer     | null: false                   | 
+|prefecture_id     | integer     | null: false                   | 
 |seller_id         | integer     | null: false                   |
 ### Association
 - belongs_to :user
-- belong_to  :order
+- has_one  :order
 
 ## orders テーブル
 
@@ -42,7 +42,7 @@
 ### Association
 - belongs_to :user
 - belongs_to :item
-- belongs_to :shipping_address
+- has_one :shipping_address
 
 
 ## shipping_addresses　テーブル
@@ -54,6 +54,7 @@
 | street        | string      | null: false                   |
 | building      | string      |                               |
 | phone	        | string      | null: false                   |
+| oder	        | reference   | null: false, foreign_key: true|
 
  ### Association
-- has_many : order
+- belongs_to : order
