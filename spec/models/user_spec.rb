@@ -28,7 +28,11 @@ require 'rails_helper'
       expect(@user.errors.full_messages).to include "Password can't be blank"
     end
   
-    
+    it 'passwordが存在してもpassword_confirmationが空では登録できない' do
+      @user.password_confirmation = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Password confirmation doesn't match Password"
+    end
   
     it 'second_nameが空では登録できない' do
       @user.second_name = ''
@@ -89,11 +93,7 @@ end
     expect(@user.errors.full_messages).to include'Password is too short (minimum is 6 characters)'
     end
 
-    it 'passwordが存在してもpassword_confirmationが空では登録できない' do
-      @user.password_confirmation = ''
-      @user.valid?
-      expect(@user.errors.full_messages).to include "Password confirmation doesn't match Password"
-    end
+    
     
     it '英字のみのパスワードでは登録できないこと' do
       @user.password = 'abcdef'

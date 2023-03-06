@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 8, maximum: 128 },
   format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i, message: 'は英字と数字をそれぞれ1文字以上含めて設定してください' },
   exclusion: { in: %w[password PASSWORD 12345678 87654321], message: 'は使用できません' }
-  with_options format: { with: /\A[ぁ-んァ-ン一-龥]/ } do
+  with_options format: { with: /\A[ぁ-んァ-ン一-龥々]+\z/ } do
 validates :first_name, presence: true
 validates :second_name, presence: true
 end
