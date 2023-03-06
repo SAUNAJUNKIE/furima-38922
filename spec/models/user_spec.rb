@@ -140,7 +140,13 @@ require 'rails_helper'
       expect(@user.errors.full_messages).to include 'Second name kana はカタカナで入力してください'
       
       end
+
+      it '名（カナ）にカタカナ以外の文字（平仮名・漢字・英数字・記号）が含まれていると登録できないこと' do
+        @user.first_name_kana = 'たろう'
+        @user.valid?
+        expect(@user.errors.full_messages).to include 'First name kana はカタカナで入力してください'
+        end
     end
-    
+
       end
 end
