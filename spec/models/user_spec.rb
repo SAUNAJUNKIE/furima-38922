@@ -4,6 +4,8 @@ require 'rails_helper'
  
   
   RSpec.describe 'ユーザー新規登録' do
+    context '正常系' do
+
     before do
       @user = FactoryBot.build(:user)
     end
@@ -26,11 +28,7 @@ require 'rails_helper'
       expect(@user.errors.full_messages).to include "Password can't be blank"
     end
   
-    it 'passwordが存在してもpassword_confirmationが空では登録できない' do
-      @user.password_confirmation = ''
-      @user.valid?
-      expect(@user.errors.full_messages).to include "Password confirmation doesn't match Password"
-    end
+    
   
     it 'second_nameが空では登録できない' do
       @user.second_name = ''
@@ -62,9 +60,13 @@ require 'rails_helper'
       expect(@user.errors.full_messages).to include "Birthday can't be blank"
     end
   
+end
 
   
-  
+    context '異常系' do
+      before do
+        @user = FactoryBot.build(:user)
+      end
     
     it '重複したemailが存在する場合は登録できない' do
       user = FactoryBot.create(:user, email: 'test@example.com')
@@ -87,7 +89,11 @@ require 'rails_helper'
     expect(@user.errors.full_messages).to include'Password is too short (minimum is 6 characters)'
     end
 
-  
+    it 'passwordが存在してもpassword_confirmationが空では登録できない' do
+      @user.password_confirmation = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Password confirmation doesn't match Password"
+    end
     
     it '英字のみのパスワードでは登録できないこと' do
       @user.password = 'abcdef'
@@ -120,13 +126,13 @@ require 'rails_helper'
     it '姓（全角）に半角文字が含まれていると登録できないこと' do
       @user.second_name = 'Yamada'
       @user.valid?
-      expect(@user.errors.full_messages).to include 'Second name は漢字・ひらがなで入力してください'
+      expect(@user.errors.full_messages).to include 'Second name is invalid'
     end
     
     it '名（全角）に半角文字が含まれていると登録できないこと' do
       @user.first_name = 'Taro'
       @user.valid?
-      expect(@user.errors.full_messages).to include 'First name は漢字・ひらがなで入力してください'
+      expect(@user.errors.full_messages).to include 'First name is invalid'
     end
     
     it '姓（カナ）にカタカナ以外の文字（平仮名・漢字・英数字・記号）が含まれていると登録できないこと' do
@@ -134,5 +140,7 @@ require 'rails_helper'
       @user.valid?
       expect(@user.errors.full_messages).to include 'Second name kana はカタカナで入力してください'
       
+      end
+
       end
 end
