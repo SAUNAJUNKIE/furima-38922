@@ -2,10 +2,12 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
 
   def index
-    # @items = Item.all
+    @items = Item.all.order(created_at: :desc)
+    if @items.empty?
+      @dummy_item = OpenStruct.new(name: '商品を出品してね！', price: 99999999, image: 'https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg')
   end
 
-  
+end
   
   def new
     @item = Item.new
