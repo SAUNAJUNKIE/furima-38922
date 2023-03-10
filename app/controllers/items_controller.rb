@@ -11,6 +11,7 @@ end
   
   def new
     @item = Item.new
+
   end
 
   def create
@@ -21,7 +22,7 @@ end
       render :new
     end
   end
-  
+
   def show
     @item = Item.find(params[:id])
   end
