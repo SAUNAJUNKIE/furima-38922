@@ -9,6 +9,9 @@ class ApplicationController < ActionController::Base
         devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :first_name, :second_name, :first_name_kana, :second_name_kana, :birthday])
       end
           
+      def new
+        @user = User.new
+      end
       
   
   def basic_auth
