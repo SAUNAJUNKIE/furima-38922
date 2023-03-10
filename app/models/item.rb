@@ -11,6 +11,7 @@ class Item < ApplicationRecord
   belongs_to_active_hash :status
   belongs_to_active_hash :prefecture
   belongs_to_active_hash :shipping_day
+  belongs_to_active_hash :seller
 
   has_one_attached :image
   validates :name, presence: true
