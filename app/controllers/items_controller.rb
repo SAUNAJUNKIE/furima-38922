@@ -46,11 +46,12 @@ end
   end
   
   def destroy
-    if @item.destroy
-      redirect_to root_path
+    @item.destroy
+    if current_user == @item.user 
+      render :index
     else
-      render :show
-  end
+      redirect_to root_path
+    end
 end
 
   
