@@ -30,11 +30,9 @@ end
   end
   
   def edit
-    if current_user == @item.user 
-      render :edit
-    else
-      redirect_to root_path
-    end
+    check_user_ownership
+          render :edit
+    
    end
 
    def update
@@ -46,14 +44,16 @@ end
   end
   
   def destroy
-    if current_user == @item.user 
-      @item.destroy
+    check_user_ownership
+          @item.destroy
       render :index
-    else
-      redirect_to root_path
-    end
+    
 end
 
+def check_user_ownership
+  if current_user != @item.user
+    redirect_to root_path
+  end
   
   
   private
