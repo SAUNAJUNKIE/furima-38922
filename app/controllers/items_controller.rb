@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit, :create, :update]
-  before_action :set_item, only: [:show, :edit, :update]
+  before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
 
 
 
@@ -45,7 +45,14 @@ end
     end
   end
   
-  
+  def destroy
+    if @item.destroy
+      redirect_to root_path
+    else
+      render :show
+  end
+end
+
   
   
   private
