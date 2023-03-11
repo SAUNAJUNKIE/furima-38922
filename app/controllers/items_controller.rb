@@ -25,11 +25,9 @@ end
   end
 
   def show
-    @item = Item.find(params[:id])
   end
   
   def edit
-    @item = Item.find(params[:id]) 
     if current_user == @item.user 
       render :edit
     else
@@ -38,7 +36,6 @@ end
    end
 
    def update
-    @item = Item.find(params[:id])
     if @item.update(item_params)
       redirect_to item_path(@item)
     else
@@ -50,6 +47,13 @@ end
   
   
   private
+
+
+  def set_item
+    @item = Item.find(params[:id])
+  end
+
+  
   def item_params
     params.require(:item).permit(:name, :image, :description, :category_id, :status_id, :seller_id, :prefecture_id, :shipping_day_id, :price).merge(user_id: current_user.id)
   end
