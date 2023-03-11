@@ -30,9 +30,7 @@ end
   def show
   end
   
-  def edit
-    render :edit
-    
+  def edit    
    end
 
    def update
