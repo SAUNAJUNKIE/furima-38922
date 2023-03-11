@@ -31,7 +31,7 @@ end
   end
   
   def edit
-          render :edit
+    render :edit
     
    end
 
@@ -44,9 +44,8 @@ end
   end
   
   def destroy
-          @item.destroy
-      render :index
-    
+      @item.destroy
+      redirect_to root_path
 end
 
   
@@ -54,9 +53,13 @@ end
   private
 
   def check_user_ownership
-    if current_user != @item.user
+    if current_user == @item.user
+      # do nothing
+    else
       redirect_to root_path
     end
+  end
+  
 
   def set_item
     @item = Item.find(params[:id])
