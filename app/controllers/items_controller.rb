@@ -46,8 +46,8 @@ end
   end
   
   def destroy
-    @item.destroy
     if current_user == @item.user 
+      @item.destroy
       render :index
     else
       redirect_to root_path
