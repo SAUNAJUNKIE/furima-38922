@@ -1,9 +1,8 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, except: :index
-  before_action :check_order_existence, only: [:new, :create]
+  before_action :check_order_existence, only: [:new, :create, :index]
 
   def index
-  if user_signed_in?
     @item = Item.find_by(id: params[:item_id])
 
     if @item.order.present?
@@ -13,11 +12,10 @@ class OrdersController < ApplicationController
     end
   else
     redirect_to new_user_session_path
-end
+
 end
 
   def new
-    @item = Item.find_by(id: params[:item_id])
     
   end
 
@@ -30,12 +28,10 @@ end
     if @order_shipping_address.valid?
       pay_item 
       @order_shipping_address.save
-      Order.create(item_id: @item.id, user_id: current_user.id)
       return redirect_to root_path
-    else
-      render 'index'
-    end
-  end
+  
+    end 
+   end
   
   
   
