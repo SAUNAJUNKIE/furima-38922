@@ -14,8 +14,8 @@ end
   
   def new
     @item = Item.new
-
-  end
+   
+ end
 
   def create
     @item = Item.new(item_params)
@@ -50,13 +50,12 @@ end
   private
 
   def check_user_ownership
-    if current_user == @item.user
-      # do nothing
-    else
+    if @item.order.present?
       redirect_to root_path
-    end
+    elsif current_user != @item.user
+      redirect_to root_path
   end
-  
+  end
 
   def set_item
     @item = Item.find(params[:id])
