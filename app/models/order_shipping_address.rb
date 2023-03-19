@@ -6,7 +6,7 @@ class OrderShippingAddress
   with_options presence: true do
     validates :city
     validates :street
-    validates :phone, length: { minimum: 10, maximum: 11 }, numericality: { only_integer: true }
+    validates :phone, format: { with: /\A\d{10,11}\z/ }
     validates :user_id
     validates :item_id
   end

@@ -1,10 +1,10 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, except: :index
   before_action :check_order_existence, only: [:new, :create, :index]
+  before_action :set_item, only: [:create, :index]
 
   def index
-    @item = Item.find_by(id: params[:item_id])
-
+    set_item
     if @item.order.present?
       redirect_to root_path
     else
@@ -21,8 +21,7 @@ end
 
   def create
 
-    @item = Item.find_by(id: params[:item_id])
-    
+    set_item    
     @order_shipping_address = OrderShippingAddress.new(order_shipping_address_params)
 
     if @order_shipping_address.valid?
@@ -59,5 +58,12 @@ end
       redirect_to new_user_session_path, alert: "ログインが必要です。"
     end
   end
+
+def set_item
+
+    @item = Item.find_by(id: params[:item_id])
+end
+
+
 
 end
