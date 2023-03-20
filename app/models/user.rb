@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :name, presence: true
-  validates :password, presence: true, length: { minimum: 8, maximum: 128 },
+  validates :password, presence: true, length: { minimum: 6, maximum: 128 },
   format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i, message: 'は英字と数字をそれぞれ1文字以上含めて設定してください' },
   exclusion: { in: %w[password PASSWORD 12345678 87654321], message: 'は使用できません' }
    with_options format: { with: /\A[ぁ-んァ-ン一-龥々ー]+\z/ } do 
