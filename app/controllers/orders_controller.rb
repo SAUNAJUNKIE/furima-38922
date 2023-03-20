@@ -4,12 +4,16 @@ class OrdersController < ApplicationController
   before_action :set_item, only: [:create, :index]
 
   def index
-    set_item
-    if @item.order.present?
-      redirect_to root_path
+    if user_signed_in?
+      if @item.user_id == current_user.id || @item.order.present?
+        redirect_to root_path
+      else
+        @order_shipping_address = OrderShippingAddress.new
+      end
     else
-    redirect_to new_user_session_path
+      redirect_to new_user_session_path
     end
+    
   end
 
  
@@ -32,8 +36,8 @@ class OrdersController < ApplicationController
   private
   
   def order_shipping_address_params
-    params.require(:order_shipping_address).permit(:postal_code, :prefecture_id, :street, :building, :city, :phone).merge(user_id: current_user.id, item_id: @item.id, token: params[:token] 
-     end
+    params.require(:order_shipping_address).permit(:postal_code, :prefecture_id, :street, :building, :city, :phone).merge(user_id: current_user.id, item_id: @item.id, token: params[:token] )
+  end
 
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
@@ -53,7 +57,8 @@ class OrdersController < ApplicationController
     elsif item.user == current_user
       redirect_to root_path
   end
-  
+end
+
 
 def set_item
 
