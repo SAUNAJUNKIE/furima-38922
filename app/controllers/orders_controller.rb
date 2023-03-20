@@ -7,12 +7,10 @@ class OrdersController < ApplicationController
     set_item
     if @item.order.present?
       redirect_to root_path
-   
-    end
-  else
+    else
     redirect_to new_user_session_path
-
-end
+    end
+  end
 
  
 
@@ -23,8 +21,8 @@ end
     if @order_shipping_address.valid?
       pay_item 
       @order_shipping_address.save
-      return redirect_to root_path
-  else render new
+       redirect_to root_path
+     else render 'index'
     end 
    end
   
@@ -34,7 +32,7 @@ end
   private
   
   def order_shipping_address_params
-    params.require(:order_shipping_address).permit(:address, :postal_code, :prefecture_id, :street, :building, :city, :phone).merge(user_id: current_user.id, item_id: @item.id, token: params[:token] 
+    params.require(:order_shipping_address).permit(:postal_code, :prefecture_id, :street, :building, :city, :phone).merge(user_id: current_user.id, item_id: @item.id, token: params[:token] 
      end
 
   def pay_item
