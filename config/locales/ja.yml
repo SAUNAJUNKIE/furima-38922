@@ -1,0 +1,10 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        name: ネーム
+        can't be blank: 空白では入力できません
+        Password: パスワード
+      tweet:
+        text: テキスト
+        image: 画像
