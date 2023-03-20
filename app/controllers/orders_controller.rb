@@ -7,28 +7,24 @@ class OrdersController < ApplicationController
     set_item
     if @item.order.present?
       redirect_to root_path
-    else
-      @order_shipping_address = OrderShippingAddress.new
+   
     end
   else
     redirect_to new_user_session_path
 
 end
 
-  def new
-    
-  end
+ 
 
   def create
 
-    set_item    
     @order_shipping_address = OrderShippingAddress.new(order_shipping_address_params)
 
     if @order_shipping_address.valid?
       pay_item 
       @order_shipping_address.save
       return redirect_to root_path
-  
+  else render new
     end 
    end
   
@@ -38,8 +34,8 @@ end
   private
   
   def order_shipping_address_params
-    params.require(:order_shipping_address).permit(:user_id, :item_id, :address,  :postal_code, :prefecture_id, :street, :building, :city, :phone, :token, :number, :month, :year, :cvc).merge(token: params[:token])
-  end
+    params.require(:order_shipping_address).permit(:address, :postal_code, :prefecture_id, :street, :building, :city, :phone).merge(user_id: current_user.id, item_id: @item.id, token: params[:token] 
+     end
 
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
@@ -53,11 +49,13 @@ end
   def check_order_existence
     item = Item.find(params[:item_id])
     if item.order.present?
-      redirect_to root_path, alert: "この商品は既に購入されています。"
+      redirect_to root_path
     elsif !user_signed_in?
-      redirect_to new_user_session_path, alert: "ログインが必要です。"
-    end
+      redirect_to new_user_session_path
+    elsif item.user == current_user
+      redirect_to root_path
   end
+  
 
 def set_item
 
