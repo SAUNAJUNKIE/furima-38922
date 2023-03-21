@@ -5,6 +5,6 @@ ja:
         name: ネーム
         can't be blank: 空白では入力できません
         Password: パスワード
-      tweet:
+      item:
         text: テキスト
         image: 画像
